@@ -1,0 +1,102 @@
+<ng-container *ngIf="!show_results">
+  <div class="container">
+    <h1 class="text-uppercase">
+      <strong>Count by glass and categories</strong>
+    </h1>
+    <label>*for each of the selected categories returns how many alcoholic cocktails are served with the selected
+      glass</label>
+  </div>
+  <div class="row mt-5">
+    <div class="col-lg-8 offset-2">
+      <input
+        type="search"
+        class="form-control"
+        placeholder="Search for categories"
+        [(ngModel)]="current_category"
+        (keyup)="update_autocomplete()">
+    </div>
+    <div class="col-lg-2">
+      <button type="button" class="btn btn-dark" (click)="onAddCategory()">Add category</button>
+    </div>
+  </div>
+  <ng-container *ngIf="autocomplete_options.length!==0">
+    <div class="row" *ngFor="let option of autocomplete_options" (click)="update_category_from_autocomplete(option)">
+      <div class="col-lg-8 offset-2 no-border">
+        <div class="form-control">
+          {{ option }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="container">
+    <div class="row alert alert-warning" *ngIf="already_exist" role="alert">
+      Please select every ingredient only once.
+    </div>
+    <div class="row alert alert-warning" *ngIf="unvalid_category" role="alert">
+      Please select valid ingredients.
+    </div>
+    <div class="row" *ngFor="let category of getAddedSearchCategories()">
+      <div class="col-lg-8 offset-2">
+        <button type="button" class="btn btn-outline-light strokeme" style="color:white"
+                (click)="deleteSearchCategory(category)">{{ category }}</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 offset-2 pt-3">
+      <label for="select_glass_type" class="">Select glass type:</label>
+      <select id="select_glass_type" class="form-control">
+        <option *ngFor="let glass_type of glass_types">
+          {{glass_type}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="custom-range form-group col-lg-6 offset-3 pt-4">
+    <div class="btn-group pt-2" id="status" data-toggle="buttons">
+      <label for="non" class="btn btn-default btn-off btn-xs " (click)="onChangeType('non')">
+        <input id="non" type="radio" value="0" name="filter_type">Non-Alcoholic
+      </label>
+      <label for="alcoholic" class="btn btn-default btn-off btn-xs pt-2" (click)="onChangeType('alcoholic')">
+        <input id="alcoholic" type="radio" value="1" name="filter_type">Alcoholic
+      </label>
+    </div>
+  </div>
+  <div class="row pt-4">
+    <div class="col-1 offset-5">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onBack()">Back</button>
+    </div>
+    <div class="col-lg-1">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onSearch()">Search</button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="show_results">
+  <div class="container">
+    <h1 class="text-uppercase">
+      <strong>Alcoholic drinks per category and glass</strong>
+    </h1>
+    <label>*for each of the selected categories, showing how many alcoholic cocktail are served in the selected glass</label>
+  </div>
+  <ng-template [ngIf]="results!==null && results.length===0">
+    <div class="container pt-5">
+      Loading results...
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="results===null">
+    <div class="container pt-5">
+      There are no results for this query.
+    </div>
+  </ng-template>
+  <ul class="list-group">
+    <li class="list-group-item" style="background-color: transparent; border: 1px solid;" *ngFor="let result of results">
+      {{result['category']}}
+      <span class="badge">{{result['amount']}}</span>
+    </li>
+  </ul>
+  <div class="row pt-4">
+    <div class="col-2 offset-5">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onBack()">Back</button>
+    </div>
+  </div>
+</ng-container>

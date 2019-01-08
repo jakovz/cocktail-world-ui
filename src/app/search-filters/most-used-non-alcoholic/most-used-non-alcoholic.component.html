@@ -1,0 +1,77 @@
+<ng-container *ngIf="show_results && !show_cocktail">
+  <div class="container">
+    <h1 class="text-uppercase">
+      <strong>Cocktails that are being made in the most used glass for non alcoholic drinks</strong>
+    </h1>
+    <label>*which is also used for some alcoholic drink</label>
+  </div>
+  <div class="container">
+    <h3>The most used glass is: {{glass_name}}</h3>
+  </div>
+  <ng-template [ngIf]="results!==null && results.length===0">
+    <div class="container pt-5">
+      Loading results...
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="results===null">
+    <div class="container pt-5">
+      There are no results for this query.
+    </div>
+  </ng-template>
+  <ng-container *ngIf="results.length!=0">
+    <div class="row">
+      <div class="container w-25 h-25">
+        <div id="cocktail_carousel" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active" style="cursor: pointer"
+                 *ngIf="exists(results[0]['name'])">
+              <img [src]="results[0]['drink_img_url']" class="d-block w-100 rounded" style="cursor: pointer"
+                   (click)="showCocktail(results[0]['name'])">
+              <div class="carousel-caption">
+                <p *ngIf="exists(results[0]['name'])">{{ results[0]["name"] }}</p>
+              </div>
+            </div>
+            <div class="carousel-item" *ngFor="let ind of counter(results.length-1); let inner_index = index"
+                 style="cursor: pointer">
+              <img [src]="results[inner_index+1]['drink_img_url']" class="d-block w-100 rounded" style="cursor: pointer"
+                   (click)="showCocktail(results[inner_index+1]['name'])">
+              <div class="carousel-caption">
+                <p *ngIf="exists(results[inner_index+1]['name'])">{{ results[inner_index + 1]["name"] }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Left and right controls -->
+          <a class="carousel-control-prev" href="#cocktail_carousel" role="button" data-slide="prev"
+             style="cursor: default">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#cocktail_carousel" role="button" data-slide="next"
+             style="cursor: default">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-2 offset-5 pt-3">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onBack()">Back to search
+      </button>
+    </div>
+  </ng-container>
+  <div class="row pt-4" *ngIf="results===null || results.length===0">
+    <div class="col-2 offset-5">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onBack()">Back</button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="show_cocktail && !show_results">
+  <div class="container">
+    <app-cocktail [cocktail_name]="cocktail"></app-cocktail>
+    <div class="col-2 offset-5 pb-1">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onBack()">Back to results</button>
+    </div>
+  </div>
+</ng-container>

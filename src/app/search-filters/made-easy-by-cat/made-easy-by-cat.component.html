@@ -1,0 +1,109 @@
+<ng-container *ngIf="!show_results">
+  <div class="container">
+    <h1 class="text-uppercase">
+      <strong>Search for easy to make drinks and meals by categories</strong>
+    </h1>
+    <label>*easy to make means the instructions contain no more than 500 characters</label>
+  </div>
+  <div class="row mt-5">
+    <div class="col-lg-8 offset-2">
+      <input
+        type="search"
+        class="form-control"
+        placeholder="Search for cocktail categories"
+        [(ngModel)]="current_cocktail_category"
+        (keyup)="update_cocktail_autocomplete()">
+    </div>
+    <div class="col-lg-2">
+      <button type="button" class="btn btn-dark" (click)="onCocktailAddCategory()">Add category</button>
+    </div>
+  </div>
+  <ng-container *ngIf="cocktail_autocomplete_options.length!==0">
+    <div class="row" *ngFor="let option of cocktail_autocomplete_options"
+         (click)="update_cocktail_category_from_autocomplete(option)">
+      <div class="col-lg-8 offset-2 no-border">
+        <div class="form-control">
+          {{ option }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="container">
+    <div class="row" *ngIf="cocktail_already_exist" role="alert">
+      <div class="col-lg-8 offset-2 alert alert-dismissible">
+        Please select every category only once.
+      </div>
+    </div>
+    <div class="row" *ngIf="invalid_cocktail_category" role="alert">
+      <div class="col-lg-8 offset-2 alert alert-dismissible">
+        Please select valid categories.
+      </div>
+    </div>
+    <div class="row" *ngFor="let category of getAddedCocktailSearchCategories()">
+      <div class="col-lg-8 offset-2">
+        <button type="button" class="btn btn-outline-light strokeme" style="color:white"
+                (click)="deleteCocktailSearchCategory(category)">{{ category }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-lg-8 offset-2">
+      <input
+        type="search"
+        class="form-control"
+        placeholder="Search for meal categories"
+        [(ngModel)]="current_meal_category"
+        (keyup)="update_meal_autocomplete()">
+    </div>
+    <div class="col-lg-2">
+      <button type="button" class="btn btn-dark" (click)="onMealAddCategory()">Add category</button>
+    </div>
+  </div>
+  <ng-container *ngIf="meal_autocomplete_options.length!==0">
+    <div class="row" *ngFor="let option of meal_autocomplete_options"
+         (click)="update_meal_category_from_autocomplete(option)">
+      <div class="col-lg-8 offset-2 no-border">
+        <div class="form-control">
+          {{ option }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="container">
+    <div class="row" *ngIf="meal_already_exist" role="alert">
+      <div class="col-lg-8 offset-2 alert alert-dismissible">
+        Please select every category only once.
+      </div>
+    </div>
+    <div class="row" *ngIf="invalid_meal_category" role="alert">
+      <div class="col-lg-8 offset-2 alert alert-dismissible">
+        Please select valid categories.
+      </div>
+    </div>
+    <div class="row" *ngFor="let category of getAddedMealSearchCategories()">
+      <div class="col-lg-8 offset-2">
+        <button type="button" class="btn btn-outline-light strokeme" style="color:white"
+                (click)="deleteMealSearchCategory(category)">{{ category }}</button>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-4">
+    <div class="col-1 offset-5">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onBack()">Back</button>
+    </div>
+    <div class="col-lg-1">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onSearch()">Search</button>
+    </div>
+  </div>
+
+</ng-container>
+<ng-container *ngIf="show_results">
+  <app-search-results [results]="results"></app-search-results>
+  <!--TODO: should be changed-->
+  <div class="row pt-1">
+    <div class="col-2 offset-5">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="show_results=false">Back</button>
+    </div>
+  </div>
+</ng-container>

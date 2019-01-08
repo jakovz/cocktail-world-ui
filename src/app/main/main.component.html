@@ -1,0 +1,89 @@
+<div class="col-lg-10 mx-auto">
+  <h1 class="text-uppercase">
+    <strong>Cocktail Meals</strong>
+  </h1>
+  <hr>
+</div>
+<div class="col-lg-8 mx-auto">
+  <p class="text-faded mb-5">
+    What would you like to see?
+  </p>
+</div>
+<div class="col-lg-10 mx-auto input-group">
+  <div class="form-group mx-auto">
+    <select class="form-control" (change)="onSelectQuery($event.target.value)">
+      <ng-container *ngFor="let query of query_keys">
+        <option [selected]="query==selected_query" value={{query}}>
+          {{available_queries[query]}}
+        </option>
+      </ng-container>
+    </select>
+  </div>
+</div>
+<div class="col-lg-8 mx-auto">
+  <a class="btn btn-dark btn-xl js-scroll-trigger" [routerLink]="['/', selected_query]">Go</a>
+</div>
+
+<!--<div class="container">
+  <div class="pb-2 mt-4 mb-2 border-bottom">
+    <h1 style="margin-bottom: 0;">
+      Cocktail World
+      <img class="img-responsive" src="assets/cocktail_icon.png"
+           style="display: inline; width: 50px; height: 50px; padding-bottom: 15px">
+    </h1>
+  </div>
+</div>
+<div class="container">
+  <div class="container pl-5 pr-5 pb-2">
+    <form (ngSubmit)="onSearch()">
+      <app-search-by-ingredients></app-search-by-ingredients>
+      <app-search-filters></app-search-filters>
+      <div class="row">
+        <div class="col-lg-2 offset-lg-5">
+          <input type="submit" class="btn btn-primary" value="Search">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>-->
+<!--
+<div class="container">
+  <div class="container pl-5 pr-5 pb-2">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Cocktails</h3>
+      </div>
+      <div class="col-lg-6">
+        <h3>Meals</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="container pl-5 pr-5 pb-2">
+          <ng-container *ngIf="results.length!==0; else loading">
+            <app-results [results]="results"></app-results>
+            &lt;!&ndash;<app-meals></app-meals>&ndash;&gt;
+          </ng-container>
+          <ng-template #loading>
+            <div class="container pt-5">
+              Loading results...
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="container pl-5 pr-5 pb-2">
+          <ng-container *ngIf="result_meals.length!==0; else loading">
+            <app-meals [meals]="result_meals"></app-meals>
+          </ng-container>
+          <ng-template #loading>
+            <div class="container pt-5">
+              Loading results...
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->

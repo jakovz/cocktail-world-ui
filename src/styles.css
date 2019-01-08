@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+
+.strokeme {
+  text-shadow: -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
+
+a, button, .no-border {
+  text-shadow: none;
+}

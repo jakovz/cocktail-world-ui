@@ -1,0 +1,57 @@
+<ng-container *ngIf="!show_results">
+  <div class="container">
+    <h1 class="text-uppercase">
+      <strong>Search for ingredients that participate in any number of different drinks</strong>
+    </h1>
+    <label>*you might also search only for drinks that have a minimum number of ingredients</label>
+  </div>
+  <div class="custom-range form-group col-lg-6 offset-3 pt-4">
+    <input type="number" class="form-control text-center" placeholder="number of different drinks"
+           [(ngModel)]="different_drinks">
+    <input type="number" class="form-control text-center" placeholder="minimum number of ingredients in any drink"
+           [(ngModel)]="ingredients_in_drink">
+  </div>
+  <div class="row pt-4">
+    <div class="col-1 offset-5">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onBack()">Back</button>
+    </div>
+    <div class="col-lg-1">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onSearch()">Search</button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="show_results">
+  <div class="container">
+    <h1 class="text-uppercase">
+      <strong>Result ingredients</strong>
+    </h1>
+    <label>*showing ingredients that appear in at least {{ different_drinks }} different drinks in drinks that have at
+        least {{ingredients_in_drink}} different ingredients</label>
+  </div>
+  <ng-template [ngIf]="results!==null && results.length===0">
+    <div class="container pt-5">
+      Loading results...
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="results===null">
+    <div class="container pt-5">
+      There are no results for this query.
+    </div>
+  </ng-template>
+  <div class="col-2 offset-5">
+    <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="show_results=false">Back</button>
+  </div>
+  <div class="row pt-3" *ngFor="let ind of counter(results.length/6); let result_index = index">
+    <div class="col-lg-2" *ngFor="let ind of counter(6); let inner_index=index">
+      <ng-container *ngIf="exists(results[inner_index + (result_index*6)])">
+        <div class="card text-center" style="background: transparent; border:white">
+          <img [src]="results[inner_index + (result_index*6)]['ingredient_img_url']" class="card-img-top"
+               *ngIf="exists(results[inner_index + (result_index*6)]['ingredient_img_url'])">
+          <div class="card-body">
+            <label class="card-link" *ngIf="exists(results[inner_index + (result_index*6)]['ingredient_name'])">{{ results[inner_index + (result_index * 6)]["ingredient_name"] }}</label>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

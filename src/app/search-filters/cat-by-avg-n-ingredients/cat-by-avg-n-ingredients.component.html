@@ -1,0 +1,81 @@
+<ng-container *ngIf="!show_results">
+  <div class="container">
+    <h1 class="text-uppercase">
+      <strong>Sort categories by average number of drinks</strong>
+    </h1>
+    <label>*select categories to sort by the average number of drinks in them</label>
+  </div>
+  <div class="row mt-5">
+    <div class="col-lg-8 offset-2">
+      <input
+        type="search"
+        class="form-control"
+        placeholder="Search for categories"
+        [(ngModel)]="current_category"
+        (keyup)="update_autocomplete()">
+    </div>
+    <div class="col-lg-2">
+      <button type="button" class="btn btn-dark" (click)="onAddCategory()">Add category</button>
+    </div>
+  </div>
+  <ng-container *ngIf="autocomplete_options.length!==0">
+    <div class="row" *ngFor="let option of autocomplete_options" (click)="update_category_from_autocomplete(option)">
+      <div class="col-lg-8 offset-2 no-border">
+        <div class="form-control">
+          {{ option }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="container">
+    <div class="row alert alert-warning" *ngIf="already_exist" role="alert">
+      Please select every category only once.
+    </div>
+    <div class="row alert alert-warning" *ngIf="unvalid_category" role="alert">
+      Please select valid categories.
+    </div>
+    <div class="row" *ngFor="let category of getAddedSearchCategories()">
+      <div class="col-lg-8 offset-2">
+        <button type="button" class="btn btn-outline-light strokeme" style="color:white"
+                (click)="deleteSearchCategory(category)">{{ category }}</button>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-4">
+    <div class="col-1 offset-5">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onBack()">Back</button>
+    </div>
+    <div class="col-lg-1">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onSearch()">Search</button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="show_results">
+  <div class="container">
+    <h1 class="text-uppercase">
+      <strong>Showing categories by their average number of drinks</strong>
+    </h1>
+    <label>*each row contains the category and the average number of drinks</label>
+  </div>
+  <ng-template [ngIf]="results!==null && results.length===0">
+    <div class="container pt-5">
+      Loading results...
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="results===null">
+    <div class="container pt-5">
+      There are no results for this query.
+    </div>
+  </ng-template>
+  <ul class="list-group">
+    <li class="list-group-item" style="background-color: transparent; border: 1px solid;" *ngFor="let result of results">
+      {{result['category']}}
+      <span class="badge">{{result['amount']}}</span>
+    </li>
+  </ul>
+  <div class="row pt-4">
+    <div class="col-2 offset-5">
+      <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onBack()">Back</button>
+    </div>
+  </div>
+</ng-container>
