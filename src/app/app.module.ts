@@ -23,7 +23,8 @@ import { MadeEasyByCatComponent } from './search-filters/made-easy-by-cat/made-e
 import { FullTextComponent } from './search-filters/full-text/full-text.component';
 import { CommonIngredientsComponent } from './search-filters/common-ingredients/common-ingredients.component';
 import { MealComponent } from './meal/meal.component';
-
+declare var jquery:any;
+declare var $ :any;
 
 
 const appRoutes: Routes = [
