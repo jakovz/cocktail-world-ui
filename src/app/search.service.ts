@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class SearchService {
-  SERVER_URL = 'http://127.0.0.1:8000';
+  SERVER_URL = 'http://delta-tomcat-vm.cs.tau.ac.il:30875';
   selected_search_ingredients = [];
   selected_search_filters = [];
 
