@@ -1,7 +1,7 @@
 <ng-container *ngIf="!show_results && !show_cocktail">
   <div class="container">
     <h1 class="text-uppercase">
-      <strong>Free search</strong>
+      <strong>Full text search</strong>
     </h1>
     <label>*returns all cocktails and meals contain the search in their instructions</label>
   </div>
@@ -90,7 +90,8 @@
 </ng-container>
 <ng-container *ngIf="show_cocktail && !show_results">
   <div class="container">
-    <app-cocktail [cocktail_name]="cocktail"></app-cocktail>
+    <app-cocktail [cocktail_name]="cocktail" *ngIf="is_cocktail"></app-cocktail>
+    <app-meal [meal_name]="cocktail" *ngIf="!is_cocktail"></app-meal>
     <div class="col-2 offset-5 pb-1">
       <button class="btn btn-dark btn-xl js-scroll-trigger" (click)="onBack()">Back to results</button>
     </div>

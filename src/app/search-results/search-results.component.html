@@ -16,8 +16,7 @@
                   <div class="carousel-item active h-15 w-100">
                     <div class="row text-center">
                       <div class="col-lg-12">
-                        <h5 [routerLink]="['/cocktail', results[0]['drink_name']]"
-                            class="card-link"
+                        <h5 class="card-link"
                             *ngIf="exists(results[0]['drink_name']) && exists(results[0]['meal_name'])">
                           {{results[0]["meal_name"]}} with {{ results[0]["drink_name"] }}
                         </h5>
@@ -54,7 +53,7 @@
                         <div class="col-lg-6">
                           <img [src]="results[inner_index+1]['meal_img_url']" class="d-block w-100 rounded border"
                                (routerLink)="showMeal(results[inner_index+1]['meal_name'])"
-                               *ngIf="exists(results[inner_index+1]['drink_name'])" style="cursor: pointer">
+                               *ngIf="exists(results[inner_index+1]['meal_name'])" style="cursor: pointer">
                         </div>
                       </div>
                     </div>

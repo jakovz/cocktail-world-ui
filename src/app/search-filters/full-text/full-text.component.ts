@@ -12,6 +12,7 @@ export class FullTextComponent extends SearchFiltersComponent implements OnInit 
   search_query = '';
   results = [];
   cocktail = '';
+  is_cocktail = true;
   show_cocktail = false;
 
   constructor(searchService: SearchService) {
@@ -49,7 +50,12 @@ export class FullTextComponent extends SearchFiltersComponent implements OnInit 
   }
 
   showCocktail(cocktail: string) {
+    let params = new HttpParams();
     this.cocktail = cocktail;
+    params = params.set('drink_name', JSON.stringify(this.cocktail));
+    this.searchService.getResutls('drink', params).subscribe((data) => {
+      this.is_cocktail = JSON.parse(data['drink'])[0] !== 'undefined';
+    });
     this.show_cocktail = true;
     this.show_results = false;
   }
