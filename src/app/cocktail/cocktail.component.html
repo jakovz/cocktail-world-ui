@@ -17,9 +17,9 @@
         <div class="row">
           <label><b>The drink ingredients</b></label>
         </div>
-        <div class="row" *ngFor="let ingredient of (cocktail?.ingredients); let i=index;">
+        <div class="row" *ngFor="let ingredient of this.cocktail_ingredients; let i=index;">
           <ng-container *ngIf="ingredient">
-            <a [routerLink]="['/ingredient', ingredient]">{{ ingredient }}</a>{{ " -  " + cocktail.measures[i] }}
+            <label>{{ ingredient[0] }}</label>{{ " -  " + ingredient[1] }}
           </ng-container>
         </div>
       </div>

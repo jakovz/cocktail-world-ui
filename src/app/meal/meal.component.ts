@@ -12,6 +12,7 @@ import {SearchService} from '../search.service';
 })
 export class MealComponent implements OnInit {
   meal: MealModel;
+  meal_ingredients = [];
   @Input() meal_name = '';
 
   constructor(private searchService: SearchService, private http: HttpClient) {
@@ -19,6 +20,7 @@ export class MealComponent implements OnInit {
 
   ngOnInit() {
     this.getMeal();
+    this.getMealIngredients();
   }
 
   getMeal() {
@@ -26,6 +28,18 @@ export class MealComponent implements OnInit {
     params = params.set('meal_name', JSON.stringify(this.meal_name));
     this.searchService.getResutls('meal', params).subscribe((data) => {
       this.meal = new MealModel(JSON.parse(data['meal'])[0]);
+      this.searchService.clearAll();
+    }, (err) => {
+      console.log(err);
+      this.meal = null;
+    });
+  }
+
+  getMealIngredients() {
+    let params = new HttpParams();
+    params = params.set('meal_name', JSON.stringify(this.meal_name));
+    this.searchService.getResutls('meal_ingredients', params).subscribe((data) => {
+      this.meal_ingredients = data['meal_ingredients'];
       this.searchService.clearAll();
     }, (err) => {
       console.log(err);

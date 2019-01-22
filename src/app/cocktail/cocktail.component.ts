@@ -13,12 +13,14 @@ import {SearchService} from '../search.service';
 export class CocktailComponent implements OnInit {
   cocktail: CocktailModel;
   @Input() cocktail_name = '';
+  cocktail_ingredients = [];
 
   constructor(private searchService: SearchService, private http: HttpClient) {
   }
 
   ngOnInit() {
     this.getDrink();
+    this.getDrinkIngredients();
   }
 
   getDrink() {
@@ -26,6 +28,18 @@ export class CocktailComponent implements OnInit {
     params = params.set('drink_name', JSON.stringify(this.cocktail_name));
     this.searchService.getResutls('drink', params).subscribe((data) => {
       this.cocktail = new CocktailModel(JSON.parse(data['drink'])[0]);
+      this.searchService.clearAll();
+    }, (err) => {
+      console.log(err);
+      this.cocktail = null;
+    });
+  }
+
+  getDrinkIngredients() {
+    let params = new HttpParams();
+    params = params.set('cocktail_name', JSON.stringify(this.cocktail_name));
+    this.searchService.getResutls('cocktail_ingredients', params).subscribe((data) => {
+      this.cocktail_ingredients = data['cocktail_ingredients'];
       this.searchService.clearAll();
     }, (err) => {
       console.log(err);

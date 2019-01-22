@@ -52,7 +52,7 @@
                         </div>
                         <div class="col-lg-6">
                           <img [src]="results[inner_index+1]['meal_img_url']" class="d-block w-100 rounded border"
-                               (routerLink)="showMeal(results[inner_index+1]['meal_name'])"
+                               (click)="showMeal(results[inner_index+1]['meal_name'])"
                                *ngIf="exists(results[inner_index+1]['meal_name'])" style="cursor: pointer">
                         </div>
                       </div>

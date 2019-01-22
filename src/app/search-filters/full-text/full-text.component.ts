@@ -12,7 +12,8 @@ export class FullTextComponent extends SearchFiltersComponent implements OnInit 
   search_query = '';
   results = [];
   cocktail = '';
-  is_cocktail = true;
+  is_cocktail = false;
+  is_meal = false;
   show_cocktail = false;
 
   constructor(searchService: SearchService) {
@@ -54,7 +55,8 @@ export class FullTextComponent extends SearchFiltersComponent implements OnInit 
     this.cocktail = cocktail;
     params = params.set('drink_name', JSON.stringify(this.cocktail));
     this.searchService.getResutls('drink', params).subscribe((data) => {
-      this.is_cocktail = JSON.parse(data['drink'])[0] !== 'undefined';
+      this.is_cocktail = JSON.parse(data['drink']).length !== 0;
+      this.is_meal = JSON.parse(data['drink']).length === 0;
     });
     this.show_cocktail = true;
     this.show_results = false;
